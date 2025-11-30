@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Монобукеты",
+    "description": "Букеты из одного вида цветка",
+    "sortOrder": 1,
+    "isVisibleOnHome": true
+  },
+  {
+    "id": 2,
+    "name": "Авторские букеты",
+    "description": "Уникальные композиции флориста",
+    "sortOrder": 2,
+    "isVisibleOnHome": true
+  },
+  {
+    "id": 3,
+    "name": "Букеты в коробке",
+    "description": "Композиции в коробках разных размеров",
+    "sortOrder": 3,
+    "isVisibleOnHome": true
+  },
+  {
+    "id": 4,
+    "name": "VIP-букеты",
+    "description": "Премиальные и редкие композиции",
+    "sortOrder": 4,
+    "isVisibleOnHome": false
+  }
+]

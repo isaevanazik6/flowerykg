@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "authorName": "Вафо",
+    "text": "Заказываю не первый раз - всё как всегда идеально!",
+    "avatar": "/images/reviews/rev1.jpg",
+    "source": "2gis",
+    "sourceLink": "https://2gis.kg/"
+  },
+  {
+    "id": 2,
+    "authorName": "Жибек",
+    "text": "Великолепные букеты и очень быстрая доставка",
+    "avatar": "/images/reviews/rev2.jpg",
+    "source": "2gis",
+    "sourceLink": "https://2gis.kg/"
+  }
+]
