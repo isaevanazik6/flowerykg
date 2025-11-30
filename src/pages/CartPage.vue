@@ -61,7 +61,9 @@ watch(total, (newVal, oldVal) => {
 <template>
   <div class="p-10">
 
-    <h1 class="text-3xl mb-6">Корзина</h1>
+    <h1 class="text-4xl font-bold text-center mb-6">
+      Корзина
+    </h1>
 
     <div v-if="bouquetsStore.isLoading">Загрузка...</div>
 

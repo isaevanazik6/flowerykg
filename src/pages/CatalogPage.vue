@@ -25,16 +25,16 @@ const filtered = computed(() => {
 
 <template>
   <div class="p-6">
-    <h1>Каталог букетов</h1>
+    <h1 class="text-4xl font-bold text-center mb-6">
+      Каталог букетов
+    </h1>
 
-    <div class="flex gap-3 mt-4 mb-6">
+    <div class="flex gap-3 mt-4 mb-6 justify-center">
       <button
         @click="activeCategory = null"
-        :style="{
-          padding: '8px 12px',
-          border: '1px solid #ccc',
-          background: activeCategory === null ? '#eee' : 'white',
-        }"
+        class="px-3 py-2 border rounded-lg transition-all duration-200
+           hover:shadow-md"
+        :class="activeCategory === null ? 'bg-gray-200' : 'bg-white'"
       >
         Все
       </button>
@@ -43,11 +43,9 @@ const filtered = computed(() => {
         v-for="cat in categories.list"
         :key="cat.id"
         @click="activeCategory = cat.id"
-        :style="{
-          padding: '8px 12px',
-          border: '1px solid #ccc',
-          background: activeCategory === cat.id ? '#eee' : 'white',
-        }"
+        class="px-3 py-2 border rounded-lg transition-all duration-200
+           hover:shadow-md"
+        :class="activeCategory === cat.id ? 'bg-gray-200' : 'bg-white'"
       >
         {{ cat.name }}
       </button>
@@ -56,10 +54,25 @@ const filtered = computed(() => {
     <div v-if="bouquets.isLoading">Загрузка...</div>
     <div v-else-if="bouquets.error">{{ bouquets.error }}</div>
 
-    <FlowerGrid
-      v-else
-      :items="filtered"
-      @open="(id) => console.log('open details:', id)"
-    />
+    <transition name="fade" mode="out-in">
+      <FlowerGrid
+        v-if="!bouquets.isLoading"
+        :items="filtered"
+        @open="(id) => console.log('open details:', id)"
+        :key="activeCategory ?? 'all'"
+      />
+    </transition>
   </div>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

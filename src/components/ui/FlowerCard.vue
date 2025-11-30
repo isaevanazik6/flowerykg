@@ -21,7 +21,7 @@ const isFav = computed(() => favoritesStore.isFavorite(props.bouquet.id));
 
 const addToCart = () => {
   cartStore.add(props.bouquet.id);
-  toast.show("Цветы добавлены в корзину");
+  toast.show(`Цветы "${props.bouquet.name}" добавлены в Вашу корзину`);
 };
 
 const toggleFavorite = () => {
@@ -29,20 +29,25 @@ const toggleFavorite = () => {
 
   toast.show(
     isFav.value
-      ? "Удалено из избранного"
-      : "Добавлено в избранное"
+      ? `Цветы "${props.bouquet.name}" добавлены в Ваши избранные`
+      : `Цветы "${props.bouquet.name}" удалены из Ваших избранных`
   );
 };
 </script>
 
 <template>
   <BaseCard padding>
-    <div class="cursor-pointer" @click="emit('open', bouquet.id)">
-      <img
-        :src="bouquet.image"
-        :alt="bouquet.name"
-        class="w-full h-64 object-cover rounded-md"
-      />
+    <div
+      class="cursor-pointer transform transition-all duration-300 hover:-translate-y-1"
+      @click="emit('open', bouquet.id)"
+    >
+      <div class="overflow-hidden rounded-md">
+        <img
+          :src="bouquet.image"
+          :alt="bouquet.name"
+          class="w-full h-64 object-cover transition-transform duration-500 hover:scale-105"
+        />
+      </div>
 
       <h3 class="text-lg font-semibold mt-3">
         {{ bouquet.name }}

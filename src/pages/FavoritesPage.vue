@@ -20,7 +20,9 @@ const favoriteBouquets = computed(() =>
 
 <template>
   <div style="padding: 40px">
-    <h1 style="font-size: 28px; margin-bottom: 20px">Ваши избранные букеты</h1>
+    <h1 class="text-4xl font-bold text-center mb-6">
+      Ваши избранные букеты
+    </h1>
 
     <div v-if="bouquetsStore.isLoading">Загрузка...</div>
 

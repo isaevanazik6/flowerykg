@@ -34,12 +34,13 @@ const sizeClass = computed(() => {
 <template>
   <button
     :disabled="disabled || loading"
-    class="transition-all duration-200 rounded-md font-medium"
+    class="transition-all duration-200 rounded-md font-medium
+         hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
     :class="[
-      variantClass,
-      sizeClass,
-      disabled || loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
-    ]"
+    variantClass,
+    sizeClass,
+    disabled || loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+  ]"
   >
     <span v-if="!loading">
       <slot />

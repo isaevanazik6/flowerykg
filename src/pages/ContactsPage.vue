@@ -33,7 +33,9 @@ onMounted(async () => {
 <template>
   <div style="padding: 40px">
 
-    <h1 style="font-size: 28px; margin-bottom: 20px">Контакты</h1>
+    <h1 class="text-4xl font-bold text-center mb-6">
+      Контакты
+    </h1>
 
     <div v-if="isLoading">Загрузка...</div>
     <div v-else-if="error">{{ error }}</div>

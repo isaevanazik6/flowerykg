@@ -24,14 +24,16 @@ onMounted(async () => {
 
 <template>
   <div style="padding: 40px">
-    <h1 style="font-size: 28px; margin-bottom: 20px">Доставка и оплата</h1>
+    <h1 class="text-4xl font-bold text-center mb-6">
+      Доставка и оплата
+    </h1>
 
     <div v-if="isLoading">Загрузка...</div>
     <div v-else-if="error">{{ error }}</div>
 
     <div v-else>
       <StaticSection
-        v-for="(section, idx) in page.sections"
+        v-for="(section, idx) in page?.sections"
         :key="idx"
         :title="section.title"
         :text="section.text"
