@@ -2,12 +2,37 @@
 import type { Bouquet } from "@/types/Bouquet";
 import BaseCard from "@/components/base/BaseCard.vue";
 import BaseButton from "@/components/base/BaseButton.vue";
+import {useCartStore} from "@/stores/cart-store.ts";
+import {useFavoritesStore} from "@/stores/favorites-store.ts";
+import {computed} from "vue";
+import {useToastStore} from "@/stores/toast-store.ts";
+
+const cartStore = useCartStore();
+const favoritesStore = useFavoritesStore();
+const toast = useToastStore();
 
 const props = defineProps<{
   bouquet: Bouquet;
 }>();
 
 const emit = defineEmits(["add-to-cart", "toggle-favorite", "open"]);
+const isFav = computed(() => favoritesStore.isFavorite(props.bouquet.id));
+
+
+const addToCart = () => {
+  cartStore.add(props.bouquet.id);
+  toast.show("Цветы добавлены в корзину");
+};
+
+const toggleFavorite = () => {
+  favoritesStore.toggle(props.bouquet.id);
+
+  toast.show(
+    isFav.value
+      ? "Удалено из избранного"
+      : "Добавлено в избранное"
+  );
+};
 </script>
 
 <template>
@@ -32,14 +57,13 @@ const emit = defineEmits(["add-to-cart", "toggle-favorite", "open"]);
       </p>
     </div>
 
-    <div class="flex gap-2 mt-4">
-      <BaseButton size="sm" @click="emit('add-to-cart', bouquet.id)">
+    <div class="flex gap-2 mt-4 justify-end">
+      <BaseButton size="md" @click="addToCart">
         В корзину
       </BaseButton>
 
-      <BaseButton size="sm" variant="outline"
-                  @click="emit('toggle-favorite', bouquet.id)">
-        ❤
+      <BaseButton size="md" variant="outline" @click="toggleFavorite">
+        {{ isFav ? "💔" : "❤️" }}
       </BaseButton>
     </div>
   </BaseCard>

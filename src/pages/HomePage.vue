@@ -39,6 +39,7 @@ onMounted(async () => {
         :title="homeData.hero.title"
         :subtitle="homeData.hero.subtitle"
         :buttonText="homeData.hero.buttonText"
+        :route-to="homeData.hero.routeTo"
       />
       <p v-else>Загрузка...</p>
     </BaseSection>
@@ -56,6 +57,7 @@ onMounted(async () => {
       <FlowerGrid
         v-else
         :items="store.popular"
+        @open="(id) => console.log('open', id)"
       />
     </BaseSection>
 
