@@ -31,14 +31,14 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div style="padding: 40px">
+  <div class="p-10">
 
-    <h1 class="text-4xl font-bold text-center mb-6">
+    <h1 class="text-4xl font-bold text-center mb-10">
       Контакты
     </h1>
 
     <div v-if="isLoading">Загрузка...</div>
-    <div v-else-if="error">{{ error }}</div>
+    <div v-else-if="error" class="text-red-600 text-center">{{ error }}</div>
 
     <div v-else>
       <StaticSection
@@ -47,38 +47,42 @@ onMounted(async () => {
         :title="section.title"
         :text="section.text"
         :image="section.image"
+        class="mt-8"
       />
     </div>
 
-    <div style="margin-top: 40px">
-      <h2 style="font-size: 24px; margin-bottom: 15px">Наши магазины</h2>
+    <div class="mt-16">
+      <h2 class="text-3xl font-semibold text-center mb-8">
+        Наши магазины
+      </h2>
 
-      <div v-if="store.isLoading">Загрузка магазинов…</div>
-      <div v-else-if="store.error">{{ store.error }}</div>
+      <div v-if="store.isLoading" class="text-center">Загрузка магазинов…</div>
+      <div v-else-if="store.error" class="text-red-600 text-center">{{ store.error }}</div>
 
-      <div v-else>
+      <div v-else class="grid gap-6 md:grid-cols-2">
         <div
           v-for="s in store.list"
           :key="s.id"
-          style="
-            border: 1px solid #ddd;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-          "
+          class="border p-6 rounded-xl shadow-sm hover:shadow-lg transition-all"
         >
           <p><strong>Город:</strong> {{ s.city }}</p>
           <p><strong>Адрес:</strong> {{ s.address }}</p>
           <p><strong>Время работы:</strong> {{ s.workTime }}</p>
           <p><strong>Телефон:</strong> {{ s.phone }}</p>
-          <p v-if="s.instagram"><strong>Instagram:</strong> {{ s.instagram }}</p>
-          <p v-if="s.whatsapp"><strong>WhatsApp:</strong> {{ s.whatsapp }}</p>
+
+          <p v-if="s.instagram">
+            <strong>Instagram:</strong> {{ s.instagram }}
+          </p>
+
+          <p v-if="s.whatsapp">
+            <strong>WhatsApp:</strong> {{ s.whatsapp }}
+          </p>
 
           <a
             v-if="s.mapLink"
             :href="s.mapLink"
             target="_blank"
-            style="color: blue; text-decoration: underline; display: inline-block; margin-top: 10px"
+            class="inline-block mt-4 text-pink-600 underline hover:text-pink-700 transition"
           >
             Открыть на карте
           </a>

@@ -7,20 +7,21 @@ defineProps<{
 </script>
 
 <template>
-  <div style="margin-bottom: 40px">
-    <h2 v-if="title" style="font-size: 24px; margin-bottom: 10px">
-      {{ title }}
-    </h2>
-
-    <p v-if="text" style="margin-bottom: 20px; max-width: 600px; line-height: 1.6">
+  <section class="mb-12 text-center">
+    <p
+      v-if="text"
+      class="text-gray-700 max-w-2xl mx-auto mb-8 leading-relaxed text-lg"
+    >
       {{ text }}
     </p>
 
-    <img
-      v-if="image"
-      :src="image"
-      alt="section image"
-      style="max-width: 100%; border-radius: 12px"
-    />
-  </div>
+    <div v-if="image" class="flex justify-center">
+      <img
+        :src="image"
+        alt="section image"
+        class="rounded-xl shadow-md max-w-xl w-full transition-transform duration-500 hover:scale-105"
+      />
+    </div>
+
+  </section>
 </template>

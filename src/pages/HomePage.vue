@@ -45,11 +45,6 @@ onMounted(async () => {
     </BaseSection>
 
     <BaseSection>
-      <SectionHeader title="Почему выбирают нас?" />
-      <WhyUsSection v-if="homeData" :items="homeData.whyUs" />
-    </BaseSection>
-
-    <BaseSection>
       <SectionHeader title="Популярные букеты" subtitle="Лучшие композиции" />
 
       <div v-if="store.isLoading">Загрузка букетов...</div>
@@ -59,6 +54,11 @@ onMounted(async () => {
         :items="store.popular"
         @open="(id) => console.log('open', id)"
       />
+    </BaseSection>
+
+    <BaseSection>
+      <SectionHeader title="Почему выбирают нас?" />
+      <WhyUsSection v-if="homeData" :items="homeData.whyUs" />
     </BaseSection>
 
   </div>
