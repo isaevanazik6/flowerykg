@@ -59,8 +59,6 @@ const filtered = computed(() => {
     <FlowerGrid
       v-else
       :items="filtered"
-      @add-to-cart="(id) => console.log('add:', id)"
-      @toggle-favorite="(id) => console.log('favorite:', id)"
       @open="(id) => console.log('open details:', id)"
     />
   </div>

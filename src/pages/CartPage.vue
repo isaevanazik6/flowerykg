@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from "vue";
+import {computed, onMounted, ref, watch} from "vue";
 
 import { useCartStore } from "@/stores/cart-store";
 import { useBouquetsStore } from "@/stores/bouquets-store";
@@ -26,70 +26,102 @@ const total = computed(() => {
     return sum + item.quantity * item!.bouquet!.price;
   }, 0);
 });
+
+const animatedTotal = ref(total.value);
+
+watch(total, (newVal, oldVal) => {
+  const start = oldVal ?? 0;
+  const end = newVal;
+
+  let current = start;
+  animatedTotal.value = current;
+
+  const step = () => {
+    if (current === end) return;
+
+    const distance = Math.abs(end - current);
+
+    const diff = Math.max(30, Math.floor(distance * 0.18));
+
+    if (current < end) {
+      current = Math.min(current + diff, end);
+    } else {
+      current = Math.max(current - diff, end);
+    }
+
+    animatedTotal.value = current;
+
+    setTimeout(step, 16);
+  };
+
+  step();
+});
 </script>
 
 <template>
-  <div style="padding: 40px">
+  <div class="p-10">
 
-    <h1 style="font-size: 28px; margin-bottom: 20px">Корзина</h1>
+    <h1 class="text-3xl mb-6">Корзина</h1>
 
     <div v-if="bouquetsStore.isLoading">Загрузка...</div>
 
     <div v-else-if="cartItems.length === 0">
-      <p>Корзина пустая.</p>
+      <p>Ваша корзина пустая.</p>
     </div>
 
     <div v-else>
+
       <div
         v-for="item in cartItems"
         :key="item.bouquetId"
-        style="
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          border: 1px solid #ddd;
-          padding: 20px;
-          border-radius: 12px;
-          margin-bottom: 20px;
-        "
+        class="flex justify-between items-center border border-gray-300 p-5 rounded-xl mb-5"
       >
-        <div>
-          <h3 style="font-size: 20px; margin-bottom: 8px">
-            {{ item!.bouquet!.name }}
-          </h3>
+        <div class="flex items-center gap-4">
+          <img
+            :src="item.bouquet!.image"
+            class="w-20 h-20 object-cover rounded-lg"
+          />
 
-          <p style="color: #555">
-            Цена: {{ item!.bouquet!.price }} с.
-          </p>
+          <div>
+            <h3 class="text-2xl font-semibold mb-2">
+              {{ item.bouquet!.name }}
+            </h3>
+
+            <p class="text-lg text-gray-700">
+              Цена: {{ item.bouquet!.price }} c.
+            </p>
+          </div>
         </div>
 
-        <div style="display: flex; gap: 10px; align-items: center">
+        <div class="flex items-center gap-3">
 
           <button
             @click="cartStore.decrease(item.bouquetId)"
-            style="padding: 6px 12px; border: 1px solid #ccc"
+            class="px-3 py-1 border border-gray-400 rounded-md"
           >−</button>
 
-          <span style="font-size: 18px; width: 30px; text-align: center">
+          <span class="text-lg w-8 text-center">
             {{ item.quantity }}
           </span>
 
           <button
             @click="cartStore.add(item.bouquetId)"
-            style="padding: 6px 12px; border: 1px solid #ccc"
+            class="px-3 py-1 border border-gray-400 rounded-md"
           >+</button>
 
           <button
             @click="cartStore.remove(item.bouquetId)"
-            style="margin-left: 20px; padding: 6px 12px; border: 1px solid red; color: red"
-          >Удалить</button>
+            class="ml-3 px-3 py-1 border border-red-500 text-red-500 rounded-md"
+          >
+            Удалить
+          </button>
 
         </div>
       </div>
 
-      <div style="margin-top: 20px">
-        <h2 style="font-size: 24px">
-          Итого: <strong>{{ total }} с.</strong>
+      <div class="mt-6 text-right">
+        <h2 class="text-2xl font-semibold">
+          Итого: <strong>{{ animatedTotal }} c.</strong>
         </h2>
       </div>
     </div>

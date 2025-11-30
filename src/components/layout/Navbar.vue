@@ -60,7 +60,6 @@ const favouriteStore = useFavoritesStore();
         <router-link :to="ROUTE_PATHS.FAVORITES" class="relative hover:text-pink-500 transition">
           ❤
           <span
-            v-if="favouriteStore.ids.length > 0"
             class="absolute -top-2 -right-3 text-xs bg-pink-500 text-white rounded-full px-2 py-0.5"
           >
             {{ favouriteStore.ids.length }}
@@ -70,7 +69,6 @@ const favouriteStore = useFavoritesStore();
         <router-link :to="ROUTE_PATHS.CART" class="relative hover:text-pink-500 transition">
           🛒
           <span
-            v-if="cartStore.count() > 0"
             class="absolute -top-2 -right-3 text-xs bg-pink-500 text-white rounded-full px-2 py-0.5"
           >
             {{ cartStore.count() }}

@@ -20,12 +20,12 @@ const favoriteBouquets = computed(() =>
 
 <template>
   <div style="padding: 40px">
-    <h1 style="font-size: 28px; margin-bottom: 20px">Избранные букеты</h1>
+    <h1 style="font-size: 28px; margin-bottom: 20px">Ваши избранные букеты</h1>
 
     <div v-if="bouquetsStore.isLoading">Загрузка...</div>
 
     <div v-else-if="favoriteBouquets.length === 0">
-      <p>У вас пока нет избранных букетов.</p>
+      <p>У Вас пока нет избранных букетов.</p>
     </div>
 
     <FlowerGrid
