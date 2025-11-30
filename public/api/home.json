@@ -3,7 +3,11 @@
     "title": "Цветы, которые говорят за вас",
     "subtitle": "Доставка день в день. Свежие букеты с любовью.",
     "buttonText": "Перейти в каталог",
-    "routeTo": "/catalog"
+    "routeTo": "/catalog",
+    "images": [
+      "/hero/hero0.jpg",
+      "/hero/hero1.jpg"
+    ]
   },
   "whyUs": [
     {

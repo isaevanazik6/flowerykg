@@ -40,6 +40,7 @@ onMounted(async () => {
         :subtitle="homeData.hero.subtitle"
         :buttonText="homeData.hero.buttonText"
         :route-to="homeData.hero.routeTo"
+        :images="homeData.hero.images"
       />
       <p v-else>Загрузка...</p>
     </BaseSection>

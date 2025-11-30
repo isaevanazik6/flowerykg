@@ -1,5 +1,5 @@
 <template>
-  <section class="py-12 md:py-16">
+  <section class="py-6 md:py-8">
     <div class="container mx-auto px-4">
       <slot />
     </div>
