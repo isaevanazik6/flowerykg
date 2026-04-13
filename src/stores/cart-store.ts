@@ -33,10 +33,13 @@ export const useCartStore = defineStore("cart", () => {
     if (item.quantity <= 0) remove(bouquetId);
   };
 
+  const clear = () => {
+    items.value = [];
+  };
+
   const count = () =>
     items.value.reduce((sum, i) => sum + i.quantity, 0);
 
-  // сохраняем в localStorage
   watch(
     items,
     (val) => {
@@ -50,6 +53,7 @@ export const useCartStore = defineStore("cart", () => {
     add,
     remove,
     decrease,
+    clear,
     count
   };
 });

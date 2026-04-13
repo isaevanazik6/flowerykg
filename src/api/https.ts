@@ -13,11 +13,15 @@ async function parseError(response: Response): Promise<string> {
   }
 }
 
+async function parseJson<T>(response: Response): Promise<T> {
+  return await response.json() as T;
+}
+
 export async function httpGet<T>(url: string): Promise<T> {
   const response = await fetch(url, {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Accept': 'application/json',
+      Accept: "application/json",
     },
   });
 
@@ -25,5 +29,22 @@ export async function httpGet<T>(url: string): Promise<T> {
     throw new Error(await parseError(response));
   }
 
-  return await response.json() as T;
+  return parseJson<T>(response);
+}
+
+export async function httpPost<TResponse, TBody>(url: string, body: TBody): Promise<TResponse> {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    throw new Error(await parseError(response));
+  }
+
+  return parseJson<TResponse>(response);
 }
