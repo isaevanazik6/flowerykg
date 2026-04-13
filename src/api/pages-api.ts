@@ -1,18 +1,19 @@
 import type { StaticPage } from "@/types/StaticPage";
-import {httpGet} from "@/api/https.ts";
+import type { HomePage } from "@/types/HomePage";
+import { httpGet } from "@/api/https.ts";
 
-export function fetchHomePage() {
-  return httpGet<any>("/api/home.json");
+export function fetchHomePage(): Promise<HomePage> {
+  return httpGet<HomePage>("/api/home");
 }
 
-export function fetchAboutPage() {
-  return httpGet<StaticPage>("/api/about.json");
+export function fetchAboutPage(): Promise<StaticPage> {
+  return httpGet<StaticPage>("/api/about");
 }
 
-export function fetchDeliveryPage() {
-  return httpGet<StaticPage>("/api/delivery.json");
+export function fetchDeliveryPage(): Promise<StaticPage> {
+  return httpGet<StaticPage>("/api/delivery");
 }
 
-export function fetchContactsPage() {
-  return httpGet<StaticPage>("/api/contacts.json");
+export function fetchContactsPage(): Promise<StaticPage> {
+  return httpGet<StaticPage>("/api/contacts");
 }
