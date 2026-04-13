@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Navbar from "@/components/layout/Navbar.vue";
 import Footer from "@/components/layout/Footer.vue";
-import {onMounted} from "vue";
-import {useContactsStore} from "@/stores/contacts-store.ts";
+import { onMounted } from "vue";
+import { useContactsStore } from "@/stores/contacts-store.ts";
 import Toast from "@/components/base/Toast.vue";
 
 const contactsStore = useContactsStore();
@@ -13,14 +13,18 @@ onMounted(() => {
 </script>
 
 <template>
-  <Navbar />
-  <main class="min-h-screen bg-[#faf7f4]">
-    <transition name="fade" mode="out-in">
-      <router-view />
-    </transition>
-  </main>
-  <Footer />
-  <Toast />
+  <div class="min-h-screen flex flex-col bg-[#faf7f4]">
+    <Navbar />
+
+    <main class="flex-1 bg-[#faf7f4]">
+      <transition name="fade" mode="out-in">
+        <router-view />
+      </transition>
+    </main>
+
+    <Footer />
+    <Toast />
+  </div>
 </template>
 
 <style>

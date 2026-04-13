@@ -2,7 +2,7 @@
 import type { Bouquet } from "@/types/Bouquet";
 import FlowerCard from "@/components/ui/FlowerCard.vue";
 
-const props = defineProps<{
+defineProps<{
   items: Bouquet[];
 }>();
 
@@ -10,7 +10,7 @@ const emit = defineEmits(["add-to-cart", "toggle-favorite", "open"]);
 </script>
 
 <template>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
     <FlowerCard
       v-for="item in items"
       :key="item.id"

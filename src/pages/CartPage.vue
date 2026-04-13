@@ -144,80 +144,137 @@ async function submitOrder() {
 </script>
 
 <template>
-  <div class="p-10">
-    <h1 class="text-4xl font-bold text-center mb-6">
-      Корзина
-    </h1>
-
-    <div v-if="bouquetsStore.isLoading">Загрузка...</div>
-
-    <div v-else-if="cartItems.length === 0">
-      <p>Ваша корзина пустая.</p>
+  <section class="relative overflow-hidden bg-[#fffaf4]">
+    <div class="pointer-events-none absolute inset-0">
+      <div
+        class="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[#f5dfcb] blur-3xl opacity-60"
+      />
+      <div
+        class="absolute top-52 -right-20 h-80 w-80 rounded-full bg-[#ead2bd] blur-3xl opacity-45"
+      />
+      <div
+        class="absolute bottom-12 left-1/3 h-64 w-64 rounded-full bg-[#f3e7d8] blur-3xl opacity-50"
+      />
     </div>
 
-    <div v-else>
+    <div class="relative mx-auto w-full max-w-7xl px-5 py-10 md:px-8 md:py-14">
       <div
-        v-for="item in cartItems"
-        :key="item.bouquetId"
-        class="flex justify-between items-center border border-gray-300 p-5 rounded-xl mb-5 bg-white/80"
+        class="mx-auto mb-8 max-w-4xl rounded-[2rem] border border-[#eadaca] bg-white/75 px-7 py-8 text-center shadow-[0_1.2rem_3rem_rgba(96,68,44,0.08)] backdrop-blur-sm md:px-10 md:py-10"
       >
-        <div class="flex items-center gap-4">
-          <img
-            :src="item.bouquet!.image"
-            class="w-20 h-20 object-cover rounded-lg"
-            :alt="item.bouquet!.name"
-          />
 
-          <div>
-            <h3 class="text-2xl font-semibold mb-2">
-              {{ item.bouquet!.name }}
-            </h3>
+        <h1 class="mb-4 text-4xl font-bold tracking-tight text-[#3c2a20] md:text-5xl">
+          Корзина
+        </h1>
 
-            <p class="text-lg text-gray-700">
-              Цена: {{ item.bouquet!.price }} c.
-            </p>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-3">
-          <button
-            @click="cartStore.decrease(item.bouquetId)"
-            class="px-3 py-1 border border-gray-400 rounded-md hover:bg-gray-50 transition"
-          >
-            −
-          </button>
-
-          <span class="text-lg w-8 text-center">
-            {{ item.quantity }}
-          </span>
-
-          <button
-            @click="cartStore.add(item.bouquetId)"
-            class="px-3 py-1 border border-gray-400 rounded-md hover:bg-gray-50 transition"
-          >
-            +
-          </button>
-
-          <button
-            @click="cartStore.remove(item.bouquetId)"
-            class="ml-3 px-3 py-1 border border-red-500 text-red-500 rounded-md hover:bg-red-50 transition"
-          >
-            Удалить
-          </button>
-        </div>
       </div>
 
-      <div class="mt-8 flex items-center justify-between gap-6 flex-wrap">
-        <h2 class="text-2xl font-semibold">
-          Итого: <strong>{{ animatedTotal }} c.</strong>
+      <div v-if="bouquetsStore.isLoading" class="grid gap-5">
+        <div
+          v-for="n in 3"
+          :key="n"
+          class="h-36 animate-pulse rounded-[1.8rem] border border-[#eadaca] bg-white/70 shadow-[0_1rem_2.5rem_rgba(96,68,44,0.06)]"
+        />
+      </div>
+
+      <div
+        v-else-if="cartItems.length === 0"
+        class="mx-auto max-w-3xl rounded-[2rem] border border-[#eadaca] bg-white/72 px-8 py-12 text-center shadow-[0_1.2rem_3rem_rgba(96,68,44,0.08)] backdrop-blur-sm"
+      >
+        <div
+          class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#fff1e6] text-3xl"
+        >
+          🛒
+        </div>
+
+        <h2 class="mb-3 text-3xl font-semibold tracking-tight text-[#3c2a20]">
+          Ваша корзина пока пуста
         </h2>
 
-        <button
-          @click="openOrderModal"
-          class="px-6 py-3 rounded-2xl bg-[#b08a72] text-white text-lg font-medium shadow-md hover:bg-[#9d7861] transition"
+        <p class="mx-auto max-w-xl text-[1rem] leading-7 text-[#6f5646]">
+          Добавьте понравившиеся букеты в корзину, и здесь появится список выбранных
+          композиций для оформления заказа.
+        </p>
+      </div>
+
+      <div v-else class="space-y-5">
+        <article
+          v-for="item in cartItems"
+          :key="item.bouquetId"
+          class="flex flex-col gap-5 rounded-[1.8rem] border border-[#eadaca] bg-white/76 p-5 shadow-[0_1rem_2.5rem_rgba(96,68,44,0.07)] backdrop-blur-sm transition duration-300 hover:shadow-[0_1.4rem_3rem_rgba(96,68,44,0.10)] md:flex-row md:items-center md:justify-between"
         >
-          Оформить заказ
-        </button>
+          <div class="flex items-center gap-4">
+            <div class="overflow-hidden rounded-[1.2rem]">
+              <img
+                :src="item.bouquet!.image"
+                class="h-24 w-24 object-cover md:h-28 md:w-28"
+                :alt="item.bouquet!.name"
+              />
+            </div>
+
+            <div>
+              <h3 class="mb-2 text-[1.4rem] font-semibold tracking-tight text-[#3c2a20]">
+                {{ item.bouquet!.name }}
+              </h3>
+
+              <p class="text-[0.98rem] leading-6 text-[#6f5646]">
+                {{ item.bouquet!.shortDescription }}
+              </p>
+
+              <p class="mt-2 text-lg font-semibold text-[#8e6447]">
+                {{ item.bouquet!.price }} c.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3 md:justify-end">
+            <div class="flex items-center gap-2 rounded-full bg-[#fff6ec] px-2 py-2">
+              <button
+                @click="cartStore.decrease(item.bouquetId)"
+                class="flex h-9 w-9 items-center justify-center rounded-full border border-[#d8c4b3] bg-white text-[#6a5244] transition hover:bg-[#f8eee4]"
+              >
+                −
+              </button>
+
+              <span class="w-8 text-center text-lg font-medium text-[#4b392f]">
+                {{ item.quantity }}
+              </span>
+
+              <button
+                @click="cartStore.add(item.bouquetId)"
+                class="flex h-9 w-9 items-center justify-center rounded-full border border-[#d8c4b3] bg-white text-[#6a5244] transition hover:bg-[#f8eee4]"
+              >
+                +
+              </button>
+            </div>
+
+            <button
+              @click="cartStore.remove(item.bouquetId)"
+              class="rounded-full border border-[#e1bbb4] bg-[#fff5f3] px-4 py-2 text-sm font-medium text-[#b15e55] transition hover:bg-[#fdebe7]"
+            >
+              Удалить
+            </button>
+          </div>
+        </article>
+
+        <div
+          class="mt-6 flex flex-col gap-4 rounded-[2rem] border border-[#eadaca] bg-white/76 px-6 py-6 shadow-[0_1.2rem_3rem_rgba(96,68,44,0.08)] backdrop-blur-sm md:flex-row md:items-center md:justify-between"
+        >
+          <div>
+            <p class="mb-1 text-sm uppercase tracking-[0.16em] text-[#a27b5e]">
+              Итог заказа
+            </p>
+            <h2 class="text-3xl font-bold tracking-tight text-[#3c2a20]">
+              {{ animatedTotal }} c.
+            </h2>
+          </div>
+
+          <button
+            @click="openOrderModal"
+            class="inline-flex items-center justify-center rounded-full bg-[#b08a72] px-7 py-3 text-lg font-medium text-white shadow-md transition hover:bg-[#9d7861]"
+          >
+            Оформить заказ
+          </button>
+        </div>
       </div>
     </div>
 
@@ -232,7 +289,7 @@ async function submitOrder() {
         >
           <div class="mb-6">
             <h2 class="text-[1.35rem] font-semibold leading-snug text-[#2f241d]">
-              🚕💐  Чтобы оформить заказ на доставку, пожалуйста, заполните следующую информацию:
+              🚕💐 Чтобы оформить заказ на доставку, пожалуйста, заполните следующую информацию:
             </h2>
           </div>
 
@@ -258,7 +315,7 @@ async function submitOrder() {
               class="w-full rounded-[1rem] border border-[#d8c8bb] bg-white/90 px-5 py-4 text-base outline-none transition focus:border-[#b08a72] focus:ring-2 focus:ring-[#b08a72]/20"
             />
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <input
                 v-model="deliveryDate"
                 type="date"
@@ -311,7 +368,7 @@ async function submitOrder() {
         </div>
       </div>
     </transition>
-  </div>
+  </section>
 </template>
 
 <style scoped>

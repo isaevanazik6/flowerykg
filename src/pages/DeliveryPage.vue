@@ -12,6 +12,7 @@ const error = ref<string | null>(null);
 onMounted(async () => {
   try {
     isLoading.value = true;
+    error.value = null;
     page.value = await fetchDeliveryPage();
   } catch (err: unknown) {
     if (err instanceof Error) error.value = err.message;
@@ -23,22 +24,95 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div style="padding: 40px">
-    <h1 class="text-4xl font-bold text-center mb-6">
-      Доставка и оплата
-    </h1>
-
-    <div v-if="isLoading">Загрузка...</div>
-    <div v-else-if="error">{{ error }}</div>
-
-    <div v-else>
-      <StaticSection
-        v-for="(section, idx) in page?.sections"
-        :key="idx"
-        :title="section.title"
-        :text="section.text"
-        :image="section.image"
+  <section class="relative overflow-hidden bg-[#fffaf4]">
+    <div class="absolute inset-0 pointer-events-none">
+      <div
+        class="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-[#f5dfcb] blur-3xl opacity-60"
+      />
+      <div
+        class="absolute top-28 -right-20 h-80 w-80 rounded-full bg-[#ead2bd] blur-3xl opacity-50"
+      />
+      <div
+        class="absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-[#f3e7d8] blur-3xl opacity-50"
       />
     </div>
-  </div>
+
+    <div class="relative mx-auto max-w-6xl px-6 py-14 md:px-10 md:py-20">
+      <div
+        class="mx-auto mb-10 max-w-3xl rounded-[2rem] border border-[#eadaca] bg-white/75 px-7 py-8 text-center shadow-[0_1.2rem_3rem_rgba(96,68,44,0.08)] backdrop-blur-sm md:px-10 md:py-10"
+      >
+
+        <h1 class="mb-4 text-4xl font-bold tracking-tight text-[#3c2a20] md:text-5xl">
+          Доставка и оплата
+        </h1>
+
+        <p class="mx-auto max-w-2xl text-base leading-7 text-[#6f5646] md:text-lg">
+          Мы делаем оформление заказа простым и понятным: быстро принимаем заявку,
+          аккуратно собираем букет и бережно доставляем его получателю.
+        </p>
+      </div>
+
+      <div v-if="isLoading" class="space-y-6">
+        <div
+          class="h-40 animate-pulse rounded-[2rem] border border-[#eddccf] bg-white/70 shadow-[0_1rem_2.5rem_rgba(96,68,44,0.06)]"
+        />
+        <div
+          class="h-56 animate-pulse rounded-[2rem] border border-[#eddccf] bg-white/70 shadow-[0_1rem_2.5rem_rgba(96,68,44,0.06)]"
+        />
+        <div
+          class="h-56 animate-pulse rounded-[2rem] border border-[#eddccf] bg-white/70 shadow-[0_1rem_2.5rem_rgba(96,68,44,0.06)]"
+        />
+      </div>
+
+      <div v-else-if="error" class="mx-auto max-w-2xl">
+        <div
+          class="rounded-[1.75rem] border border-[#efc9c2] bg-[#fff3f1] px-6 py-5 text-center text-[#8f4b42] shadow-[0_1rem_2.5rem_rgba(96,68,44,0.06)]"
+        >
+          <p class="mb-1 text-lg font-semibold">Не удалось загрузить страницу</p>
+          <p class="text-sm">{{ error }}</p>
+        </div>
+      </div>
+
+      <div v-else class="space-y-8">
+        <div
+          class="grid gap-4 rounded-[1.75rem] border border-[#eadaca] bg-white/70 p-5 shadow-[0_1rem_2.5rem_rgba(96,68,44,0.06)] backdrop-blur-sm md:grid-cols-3"
+        >
+          <div class="rounded-[1.4rem] bg-[#fff7ee] px-5 py-5 text-center">
+            <div class="mb-2 text-2xl font-bold text-[#9f7655]">Быстро</div>
+            <div class="text-sm text-[#6f5646]">
+              Оперативно принимаем и обрабатываем заказы
+            </div>
+          </div>
+
+          <div class="rounded-[1.4rem] bg-[#fcf2e8] px-5 py-5 text-center">
+            <div class="mb-2 text-2xl font-bold text-[#9f7655]">Аккуратно</div>
+            <div class="text-sm text-[#6f5646]">
+              Доставляем композиции бережно и в хорошем состоянии
+            </div>
+          </div>
+
+          <div class="rounded-[1.4rem] bg-[#fff7ee] px-5 py-5 text-center">
+            <div class="mb-2 text-2xl font-bold text-[#9f7655]">Удобно</div>
+            <div class="text-sm text-[#6f5646]">
+              Понятные условия оплаты и оформления для клиента
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-8">
+          <div
+            v-for="(section, idx) in page?.sections"
+            :key="idx"
+            class="rounded-[2rem] border border-[#eadaca] bg-white/72 p-3 shadow-[0_1.2rem_3rem_rgba(96,68,44,0.08)] backdrop-blur-sm transition hover:-translate-y-1 hover:shadow-[0_1.5rem_3.5rem_rgba(96,68,44,0.12)] md:p-4"
+          >
+            <StaticSection
+              :title="section.title"
+              :text="section.text"
+              :image="section.image"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </template>
